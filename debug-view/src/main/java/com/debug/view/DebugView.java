@@ -14,8 +14,7 @@ import java.util.Enumeration;
 public class DebugView {
 
     private static final String TAG = "DebugView";
-    private static final int DEFAULT_PORT = 8080;
-
+    private static final int PORT = 8080;
     private static DebugHttpServer server;
 
     /**
@@ -24,25 +23,18 @@ public class DebugView {
      * @param context Application Context
      */
     public static void init(Context context) {
-        int port = DEFAULT_PORT;
-
         try {
-            if (server != null) {
-                server.stop();
+            if (server == null) {
+                server = new DebugHttpServer(context, PORT);
+                server.start();
             }
-            server = new DebugHttpServer(context, port);
-            server.start();
-            Log.d(TAG, "DebugView Initialized. Web Server started.");
+            String ip = getDeviceIpAddress();
+            Log.d(TAG, "Debug Web Server started");
+            Log.d(TAG, "Open http://" + ip + ":" + PORT + "/index.html");
+            Log.d(TAG, "ADB fallback: adb forward tcp:" + PORT + " tcp:" + PORT);
         } catch (Exception e) {
-            Log.e(TAG, "Failed to start DebugHttpServer", e);
+            Log.e(TAG, "Failed to start DebugView server", e);
         }
-
-        String ipAddress = getDeviceIpAddress();
-
-        Log.d(TAG, "Open http://" + ipAddress + ":" + port + "/index.html");
-
-        // Emulator / USB fallback
-        Log.d(TAG, "ADB fallback: adb forward tcp:" + port + " tcp:" + port);
     }
 
     /**

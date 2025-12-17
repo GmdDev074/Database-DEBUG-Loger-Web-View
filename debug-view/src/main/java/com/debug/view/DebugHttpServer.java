@@ -17,7 +17,7 @@ public class DebugHttpServer extends NanoHTTPD {
 
     public DebugHttpServer(Context context, int port) {
         super(port);
-        this.context = context;
+        this.context = context.getApplicationContext();
     }
 
     @Override
