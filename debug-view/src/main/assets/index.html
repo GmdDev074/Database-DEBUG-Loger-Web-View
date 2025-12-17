@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Android Debug Database</title>
+    <!-- Modern Font: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div id="app" class="app-container">
+
+        <!-- Header -->
+        <header class="app-header">
+            <h1 class="brand-title">Android Debug Database</h1>
+            <nav class="top-nav">
+                <a href="https://github.com/GmdDev074" target="_blank" class="nav-link">GitHub</a>
+
+                <!-- Reach Me Dropdown -->
+                <div class="dropdown-container">
+                    <span class="nav-link dropdown-trigger">Reach Me ▾</span>
+                    <div class="dropdown-menu wide-menu" id="reach-me-menu">
+                        <!-- Injected via JS -->
+                    </div>
+                </div>
+
+                <!-- Other Projects Dropdown -->
+                <div class="dropdown-container">
+                    <span class="nav-link dropdown-trigger">Other Projects ▾</span>
+                    <div class="dropdown-menu" id="other-projects-menu">
+                        <!-- Injected via JS -->
+                    </div>
+                </div>
+            </nav>
+        </header>
+
+        <main class="main-content">
+            <!-- Query Section -->
+            <section class="query-section card">
+                <h2 class="section-label">Query</h2>
+                <div class="query-input-wrapper">
+                    <input type="text" id="sql-query" class="input-field" placeholder="Enter SQL query...">
+                </div>
+                <div class="query-actions">
+                    <div class="action-group">
+                        <button class="btn btn-secondary">Download</button>
+                        <button class="btn btn-danger">Delete</button>
+                        <span class="context-label">SharedPreferences</span>
+                    </div>
+                    <button class="btn btn-primary">Run Query</button>
+                </div>
+            </section>
+
+            <!-- Three Column Layout -->
+            <section class="database-browser">
+                <!-- Column 1: Databases -->
+                <div class="col-databases">
+                    <div class="panel-header">Databases</div>
+                    <ul class="list-group" id="db-list">
+                        <!-- JS Rendered -->
+                        <li class="list-item active">APP_SHARED_PREFERENCES</li>
+                        <li class="list-item">user_db.sqlite</li>
+                        <li class="list-item">logs.db</li>
+                    </ul>
+                </div>
+
+                <!-- Column 2: Tables -->
+                <div class="col-tables">
+                    <div class="panel-header">Tables</div>
+                    <ul class="list-group" id="table-list">
+                        <!-- JS Rendered -->
+                        <li class="list-item active">debug_prefs</li>
+                        <li class="list-item">user_sessions</li>
+                    </ul>
+                </div>
+
+                <!-- Column 3: Data -->
+                <div class="col-data">
+                    <div class="panel-header">Data</div>
+
+                    <div class="data-controls">
+                        <div class="crud-actions">
+                            <button class="btn btn-sm btn-outline">Add</button>
+                            <button class="btn btn-sm btn-outline">Edit</button>
+                            <button class="btn btn-sm btn-outline">Delete</button>
+                        </div>
+                        <div class="search-wrapper">
+                            <label for="search-data">Search:</label>
+                            <input type="text" id="search-data" class="input-field input-sm">
+                        </div>
+                    </div>
+
+                    <div class="table-container">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Key</th>
+                                    <th>Value</th>
+                                </tr>
+                            </thead>
+                            <tbody id="data-rows">
+                                <!-- JS Rendered -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="pagination">
+                        <span class="page-info">Showing 1 to 4 of 4 entries</span>
+                        <div class="page-controls">
+                            <button class="btn-text" disabled>Previous</button>
+                            <button class="btn-page active">1</button>
+                            <button class="btn-text">Next</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+    <script src="constants.js"></script>
+    <script src="app.js"></script>
+</body>
+
+</html>
