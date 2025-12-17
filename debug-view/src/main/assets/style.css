@@ -178,7 +178,8 @@ body {
 
 .col-databases,
 .col-tables {
-    max-height: 400px;
+    max-height: 250px;
+    /* Show ~5 items before scrolling */
     display: flex;
     flex-direction: column;
 }
@@ -246,7 +247,7 @@ body {
 
 /* Data Column */
 .col-data {
-    min-height: 400px;
+    min-height: 250px;
 }
 
 .data-controls {
@@ -328,7 +329,8 @@ body {
 /* Table Container */
 .table-container {
     overflow: auto;
-    max-height: 400px;
+    max-height: 225px;
+    /* Header + 5 rows */
 }
 
 .table-container::-webkit-scrollbar {
