@@ -1,0 +1,7 @@
+data.base.de.bug.web.view.debug-view-pngs-0 C:\Users\unity\OneDrive\Desktop\Projects\Database DEBUG Loger Web View\debug-view\build\generated\res\pngs\release
+data.base.de.bug.web.view.debug-view-resValues-1 C:\Users\unity\OneDrive\Desktop\Projects\Database DEBUG Loger Web View\debug-view\build\generated\res\resValues\release
+data.base.de.bug.web.view.debug-view-mergeReleaseResources-2 C:\Users\unity\OneDrive\Desktop\Projects\Database DEBUG Loger Web View\debug-view\build\intermediates\incremental\release\mergeReleaseResources\merged.dir
+data.base.de.bug.web.view.debug-view-mergeReleaseResources-3 C:\Users\unity\OneDrive\Desktop\Projects\Database DEBUG Loger Web View\debug-view\build\intermediates\incremental\release\mergeReleaseResources\stripped.dir
+data.base.de.bug.web.view.debug-view-merged_res-4 C:\Users\unity\OneDrive\Desktop\Projects\Database DEBUG Loger Web View\debug-view\build\intermediates\merged_res\release
+data.base.de.bug.web.view.debug-view-main-5 C:\Users\unity\OneDrive\Desktop\Projects\Database DEBUG Loger Web View\debug-view\src\main\res
+data.base.de.bug.web.view.debug-view-release-6 C:\Users\unity\OneDrive\Desktop\Projects\Database DEBUG Loger Web View\debug-view\src\release\res

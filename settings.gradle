@@ -12,5 +12,5 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-rootProject.name = "AndroidDebugDatabaseView"
+rootProject.name = "Database-DEBUG-Loger-Web-View"
 include ':debug-view'
