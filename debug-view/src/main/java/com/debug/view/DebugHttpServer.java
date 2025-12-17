@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.util.Log;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Map;
@@ -63,17 +64,38 @@ public class DebugHttpServer extends NanoHTTPD {
             JSONObject response = new JSONObject();
             JSONArray rows = new JSONArray();
 
-            // Get all SharedPreferences files
-            String[] prefFiles = context.getSharedPreferences("temp", Context.MODE_PRIVATE)
-                    .getAll().keySet().toArray(new String[0]);
+            // Get SharedPreferences directory
+            File prefsDir = new File(context.getApplicationInfo().dataDir, "shared_prefs");
 
-            // Add default SharedPreferences
-            JSONObject defaultPrefs = new JSONObject();
-            defaultPrefs.put("name", context.getPackageName() + "_preferences");
-            defaultPrefs.put("type", "SHARED_PREFS");
-            rows.put(defaultPrefs);
+            if (prefsDir.exists() && prefsDir.isDirectory()) {
+                File[] prefFiles = prefsDir.listFiles();
+                if (prefFiles != null) {
+                    for (File file : prefFiles) {
+                        if (file.getName().endsWith(".xml")) {
+                            // Remove .xml extension to get the preference name
+                            String prefName = file.getName().replace(".xml", "");
+
+                            JSONObject dbEntry = new JSONObject();
+                            dbEntry.put("name", prefName);
+                            dbEntry.put("type", "SHARED_PREFS");
+                            rows.put(dbEntry);
+
+                            Log.d(TAG, "Found SharedPreferences: " + prefName);
+                        }
+                    }
+                }
+            }
+
+            // If no prefs found, add default
+            if (rows.length() == 0) {
+                JSONObject defaultPrefs = new JSONObject();
+                defaultPrefs.put("name", context.getPackageName() + "_preferences");
+                defaultPrefs.put("type", "SHARED_PREFS");
+                rows.put(defaultPrefs);
+            }
 
             response.put("rows", rows);
+            Log.d(TAG, "getDbList response: " + response.toString());
             return newFixedLengthResponse(Response.Status.OK, "application/json", response.toString());
         } catch (Exception e) {
             Log.e(TAG, "Error in getDbList", e);
@@ -91,6 +113,7 @@ public class DebugHttpServer extends NanoHTTPD {
             rows.put(dbName);
 
             response.put("rows", rows);
+            Log.d(TAG, "getTableList response for " + dbName + ": " + response.toString());
             return newFixedLengthResponse(Response.Status.OK, "application/json", response.toString());
         } catch (Exception e) {
             Log.e(TAG, "Error in getTableList", e);
@@ -101,7 +124,9 @@ public class DebugHttpServer extends NanoHTTPD {
 
     private Response handleGetAllData(String dbName, String tableName) {
         try {
-            // Get SharedPreferences
+            Log.d(TAG, "getAllData called with dbName=" + dbName + ", tableName=" + tableName);
+
+            // Get SharedPreferences using the exact name passed
             SharedPreferences prefs = context.getSharedPreferences(
                     dbName != null ? dbName : context.getPackageName() + "_preferences",
                     Context.MODE_PRIVATE);
@@ -109,13 +134,18 @@ public class DebugHttpServer extends NanoHTTPD {
             Map<String, ?> allPrefs = prefs.getAll();
             JSONArray dataArray = new JSONArray();
 
+            Log.d(TAG, "Found " + allPrefs.size() + " entries in SharedPreferences: " + dbName);
+
             for (Map.Entry<String, ?> entry : allPrefs.entrySet()) {
                 JSONObject item = new JSONObject();
                 item.put("key", entry.getKey());
                 item.put("value", entry.getValue() != null ? entry.getValue().toString() : "null");
                 dataArray.put(item);
+
+                Log.d(TAG, "  - " + entry.getKey() + " = " + entry.getValue());
             }
 
+            Log.d(TAG, "getAllData response: " + dataArray.toString());
             return newFixedLengthResponse(Response.Status.OK, "application/json", dataArray.toString());
         } catch (Exception e) {
             Log.e(TAG, "Error in getAllData", e);
