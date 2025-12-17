@@ -295,9 +295,44 @@ body {
 /* Three Column Layout */
 .database-browser {
     display: grid;
-    grid-template-columns: 250px 250px 1fr;
+    grid-template-columns: auto auto auto;
     gap: 2rem;
     align-items: start;
+}
+
+.col-databases,
+.col-tables {
+    width: 400px;
+    max-height: 300px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.col-data {
+    width: 400px;
+}
+
+/* Custom scrollbars for columns */
+.col-databases::-webkit-scrollbar,
+.col-tables::-webkit-scrollbar {
+    width: 6px;
+}
+
+.col-databases::-webkit-scrollbar-track,
+.col-tables::-webkit-scrollbar-track {
+    background: #f1f5f9;
+    border-radius: 3px;
+}
+
+.col-databases::-webkit-scrollbar-thumb,
+.col-tables::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 3px;
+}
+
+.col-databases::-webkit-scrollbar-thumb:hover,
+.col-tables::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
 }
 
 @media (max-width: 1024px) {
@@ -317,6 +352,12 @@ body {
 
     .col-data {
         grid-column: span 1;
+    }
+
+    .col-databases,
+    .col-tables,
+    .col-data {
+        width: 100%;
     }
 }
 
