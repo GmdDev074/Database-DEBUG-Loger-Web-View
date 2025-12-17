@@ -46,7 +46,7 @@ afterEvaluate {
                 from components.release
                 groupId = 'com.github.GmdDev074'
                 artifactId = 'debug-view'
-                version = '1.5.2'
+                version = '1.5.3'
             }
         }
     }
