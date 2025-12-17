@@ -24,16 +24,18 @@ public class DebugView {
      */
     public static void init(Context context) {
         try {
-            if (server == null) {
+            if (server == null || !server.isAlive()) {
                 server = new DebugHttpServer(context, PORT);
                 server.start();
             }
             String ip = getDeviceIpAddress();
-            Log.d(TAG, "Debug Web Server started");
+            Log.d(TAG, "Debug Web Server started on port " + PORT);
             Log.d(TAG, "Open http://" + ip + ":" + PORT + "/index.html");
+            Log.d(TAG, "If not enabling http:// prefix, it may fail. Ensure your browser uses http.");
             Log.d(TAG, "ADB fallback: adb forward tcp:" + PORT + " tcp:" + PORT);
         } catch (Exception e) {
             Log.e(TAG, "Failed to start DebugView server", e);
+            server = null; // Reset to allow retry
         }
     }
 
