@@ -432,11 +432,6 @@ body {
     border-bottom: 1px solid var(--color-border);
     white-space: nowrap;
     /* Prevent text wrapping, enable horizontal scroll */
-    max-width: 400px;
-    /* Optional: limit cell width */
-    overflow: hidden;
-    text-overflow: ellipsis;
-    /* Show ... for very long text */
 }
 
 .data-table th {

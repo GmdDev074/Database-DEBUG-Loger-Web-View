@@ -300,6 +300,69 @@ class DatabaseApp {
         this.ui.searchInput.addEventListener('input', (e) => {
             this.renderData(e.target.value);
         });
+
+        // Add Button
+        document.getElementById('btn-add').addEventListener('click', () => {
+            const key = prompt('Enter key:');
+            if (!key) return;
+            const value = prompt('Enter value:');
+            if (value === null) return;
+
+            this.addPreference(key, value);
+        });
+
+        // Edit Button
+        document.getElementById('btn-edit').addEventListener('click', () => {
+            const key = prompt('Enter key to edit:');
+            if (!key) return;
+            const value = prompt('Enter new value:');
+            if (value === null) return;
+
+            this.editPreference(key, value);
+        });
+
+        // Delete Button
+        document.getElementById('btn-delete').addEventListener('click', () => {
+            const key = prompt('Enter key to delete:');
+            if (!key) return;
+
+            if (confirm(`Are you sure you want to delete "${key}"?`)) {
+                this.deletePreference(key);
+            }
+        });
+    }
+
+    async addPreference(key, value) {
+        try {
+            const res = await fetch(`/addData?dbName=${encodeURIComponent(this.currentDbName)}&key=${encodeURIComponent(key)}&value=${encodeURIComponent(value)}`);
+            if (!res.ok) throw new Error('Failed to add');
+            alert('Added successfully!');
+            this.loadTable(this.currentDbName, this.currentTable, 'SHARED_PREFS');
+        } catch (e) {
+            alert('Error: ' + e.message);
+        }
+    }
+
+    async editPreference(key, value) {
+        try {
+            const res = await fetch(`/updateData?dbName=${encodeURIComponent(this.currentDbName)}&key=${encodeURIComponent(key)}&value=${encodeURIComponent(value)}`);
+            if (!res.ok) throw new Error('Failed to update');
+            alert('Updated successfully!');
+            this.loadTable(this.currentDbName, this.currentTable, 'SHARED_PREFS');
+        } catch (e) {
+            alert('Error: ' + e.message);
+        }
+    }
+
+    async deletePreference(key) {
+        try {
+            const res = await fetch(`/deleteData?dbName=${encodeURIComponent(this.currentDbName)}&key=${encodeURIComponent(key)}`);
+            if (!res.ok) throw new Error('Failed to delete');
+            alert('Deleted successfully!');
+            this.loadTable(this.currentDbName, this.currentTable, 'SHARED_PREFS');
+        } catch (e) {
+            alert('Error: ' + e.message);
+        }
     }
 }
 

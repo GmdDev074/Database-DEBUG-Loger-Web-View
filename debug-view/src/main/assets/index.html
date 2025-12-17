@@ -40,22 +40,6 @@
         </header>
 
         <main class="main-content">
-            <!-- Query Section -->
-            <section class="query-section card">
-                <h2 class="section-label">Query</h2>
-                <div class="query-input-wrapper">
-                    <input type="text" id="sql-query" class="input-field" placeholder="Enter SQL query...">
-                </div>
-                <div class="query-actions">
-                    <div class="action-group">
-                        <button class="btn btn-secondary">Download</button>
-                        <button class="btn btn-danger">Delete</button>
-                        <span class="context-label">SharedPreferences</span>
-                    </div>
-                    <button class="btn btn-primary">Run Query</button>
-                </div>
-            </section>
-
             <!-- Three Column Layout -->
             <section class="database-browser">
                 <!-- Column 1: Databases -->
@@ -85,9 +69,9 @@
 
                     <div class="data-controls">
                         <div class="crud-actions">
-                            <button class="btn btn-sm btn-outline">Add</button>
-                            <button class="btn btn-sm btn-outline">Edit</button>
-                            <button class="btn btn-sm btn-outline">Delete</button>
+                            <button id="btn-add" class="btn btn-sm btn-outline">Add</button>
+                            <button id="btn-edit" class="btn btn-sm btn-outline">Edit</button>
+                            <button id="btn-delete" class="btn btn-sm btn-outline">Delete</button>
                         </div>
                         <div class="search-wrapper">
                             <label for="search-data">Search:</label>

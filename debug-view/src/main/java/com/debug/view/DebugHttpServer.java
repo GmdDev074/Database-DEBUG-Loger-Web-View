@@ -154,6 +154,75 @@ public class DebugHttpServer extends NanoHTTPD {
         }
     }
 
+    private Response handleAddData(String dbName, String key, String value) {
+        try {
+            Log.d(TAG, "addData called with dbName=" + dbName + ", key=" + key + ", value=" + value);
+
+            SharedPreferences prefs = context.getSharedPreferences(
+                    dbName != null ? dbName : context.getPackageName() + "_preferences",
+                    Context.MODE_PRIVATE);
+
+            prefs.edit().putString(key, value).apply();
+
+            JSONObject response = new JSONObject();
+            response.put("success", true);
+            response.put("message", "Added successfully");
+
+            Log.d(TAG, "addData response: " + response.toString());
+            return newFixedLengthResponse(Response.Status.OK, "application/json", response.toString());
+        } catch (Exception e) {
+            Log.e(TAG, "Error in addData", e);
+            return newFixedLengthResponse(Response.Status.INTERNAL_ERROR, "application/json",
+                    "{\"error\":\"" + e.getMessage() + "\"}");
+        }
+    }
+
+    private Response handleUpdateData(String dbName, String key, String value) {
+        try {
+            Log.d(TAG, "updateData called with dbName=" + dbName + ", key=" + key + ", value=" + value);
+
+            SharedPreferences prefs = context.getSharedPreferences(
+                    dbName != null ? dbName : context.getPackageName() + "_preferences",
+                    Context.MODE_PRIVATE);
+
+            prefs.edit().putString(key, value).apply();
+
+            JSONObject response = new JSONObject();
+            response.put("success", true);
+            response.put("message", "Updated successfully");
+
+            Log.d(TAG, "updateData response: " + response.toString());
+            return newFixedLengthResponse(Response.Status.OK, "application/json", response.toString());
+        } catch (Exception e) {
+            Log.e(TAG, "Error in updateData", e);
+            return newFixedLengthResponse(Response.Status.INTERNAL_ERROR, "application/json",
+                    "{\"error\":\"" + e.getMessage() + "\"}");
+        }
+    }
+
+    private Response handleDeleteData(String dbName, String key) {
+        try {
+            Log.d(TAG, "deleteData called with dbName=" + dbName + ", key=" + key);
+
+            SharedPreferences prefs = context.getSharedPreferences(
+                    dbName != null ? dbName : context.getPackageName() + "_preferences",
+                    Context.MODE_PRIVATE);
+
+            prefs.edit().remove(key).apply();
+
+            JSONObject response = new JSONObject();
+            response.put("success", true);
+            response.put("message", "Deleted successfully");
+
+            Log.d(TAG, "deleteData response: " + response.toString());
+            return newFixedLengthResponse(Response.Status.OK, "application/json", response.toString());
+        } catch (Exception e) {
+            Log.e(TAG, "Error in deleteData", e);
+            return newFixedLengthResponse(Response.Status.INTERNAL_ERROR, "application/json",
+                    "{\"error\":\"" + e.getMessage() + "\"}");
+        }
+    }
+
     private String determineMimeType(String uri) {
         if (uri.endsWith(".html"))
             return "text/html";
