@@ -37,6 +37,7 @@ android {
 dependencies {
     // Add NanoHTTPD or similar if you implement the server here
     implementation 'org.nanohttpd:nanohttpd:2.3.1'
+    // org.json is included in Android SDK by default
 }
 
 afterEvaluate {
@@ -46,7 +47,7 @@ afterEvaluate {
                 from components.release
                 groupId = 'com.github.GmdDev074'
                 artifactId = 'debug-view'
-                version = '1.5.3'
+                version = '1.6.0'
             }
         }
     }
