@@ -392,12 +392,36 @@ body {
     background: white;
     border-radius: var(--radius-lg);
     border: 1px solid var(--color-border);
-    overflow: hidden;
+    overflow: auto;
+    /* Enable both horizontal and vertical scrolling */
     box-shadow: var(--shadow-md);
+    max-height: 600px;
+    /* Limit height to ~10 rows, adjust as needed */
+}
+
+.table-container::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+.table-container::-webkit-scrollbar-track {
+    background: #f1f5f9;
+    border-radius: 4px;
+}
+
+.table-container::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 4px;
+}
+
+.table-container::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
 }
 
 .data-table {
     width: 100%;
+    min-width: 600px;
+    /* Ensure table is wide enough to trigger horizontal scroll if needed */
     border-collapse: collapse;
 }
 
@@ -406,6 +430,13 @@ body {
     padding: 1rem;
     text-align: left;
     border-bottom: 1px solid var(--color-border);
+    white-space: nowrap;
+    /* Prevent text wrapping, enable horizontal scroll */
+    max-width: 400px;
+    /* Optional: limit cell width */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    /* Show ... for very long text */
 }
 
 .data-table th {
