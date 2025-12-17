@@ -34,7 +34,7 @@ public class DebugHttpServer extends NanoHTTPD {
 
         try {
             InputStream mimeTypeStream = context.getAssets().open(uri);
-            String mimeType = getMimeTypeForFile(uri);
+            String mimeType = determineMimeType(uri);
             return newChunkedResponse(Response.Status.OK, mimeType, mimeTypeStream);
         } catch (IOException e) {
             Log.e(TAG, "File not found: " + uri, e);
@@ -42,7 +42,7 @@ public class DebugHttpServer extends NanoHTTPD {
         }
     }
 
-    private String getMimeTypeForFile(String uri) {
+    private String determineMimeType(String uri) {
         if (uri.endsWith(".html"))
             return "text/html";
         if (uri.endsWith(".css"))
