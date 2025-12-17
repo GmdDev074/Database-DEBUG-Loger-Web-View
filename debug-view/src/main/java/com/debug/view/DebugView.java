@@ -16,6 +16,8 @@ public class DebugView {
     private static final String TAG = "DebugView";
     private static final int DEFAULT_PORT = 8080;
 
+    private static DebugHttpServer server;
+
     /**
      * Initialize the Debug Server.
      *
@@ -24,12 +26,19 @@ public class DebugView {
     public static void init(Context context) {
         int port = DEFAULT_PORT;
 
-        // TODO: Start embedded web server here (NanoHTTPD / Ktor / etc.)
-        // startServer(context, port);
+        try {
+            if (server != null) {
+                server.stop();
+            }
+            server = new DebugHttpServer(context, port);
+            server.start();
+            Log.d(TAG, "DebugView Initialized. Web Server started.");
+        } catch (Exception e) {
+            Log.e(TAG, "Failed to start DebugHttpServer", e);
+        }
 
         String ipAddress = getDeviceIpAddress();
 
-        Log.d(TAG, "DebugView Initialized. Web Server started.");
         Log.d(TAG, "Open http://" + ipAddress + ":" + port + "/index.html");
 
         // Emulator / USB fallback
@@ -41,13 +50,11 @@ public class DebugView {
      */
     private static String getDeviceIpAddress() {
         try {
-            Enumeration<NetworkInterface> interfaces =
-                    NetworkInterface.getNetworkInterfaces();
+            Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces();
 
             while (interfaces.hasMoreElements()) {
                 NetworkInterface networkInterface = interfaces.nextElement();
-                Enumeration<InetAddress> addresses =
-                        networkInterface.getInetAddresses();
+                Enumeration<InetAddress> addresses = networkInterface.getInetAddresses();
 
                 while (addresses.hasMoreElements()) {
                     InetAddress address = addresses.nextElement();
