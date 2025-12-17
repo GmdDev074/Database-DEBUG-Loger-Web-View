@@ -37,6 +37,15 @@ public class DebugHttpServer extends NanoHTTPD {
         } else if (uri.startsWith("/getAllData")) {
             Map<String, String> params = session.getParms();
             return handleGetAllData(params.get("dbName"), params.get("tableName"));
+        } else if (uri.startsWith("/addData")) {
+            Map<String, String> params = session.getParms();
+            return handleAddData(params.get("dbName"), params.get("key"), params.get("value"));
+        } else if (uri.startsWith("/updateData")) {
+            Map<String, String> params = session.getParms();
+            return handleUpdateData(params.get("dbName"), params.get("key"), params.get("value"));
+        } else if (uri.startsWith("/deleteData")) {
+            Map<String, String> params = session.getParms();
+            return handleDeleteData(params.get("dbName"), params.get("key"));
         }
 
         // Static file serving
